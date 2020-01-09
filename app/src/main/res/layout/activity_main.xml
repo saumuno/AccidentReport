@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".start.MainActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/newPartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:padding="8dp"
+        android:text="@string/newPart"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/myPartsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:padding="8dp"
+        android:text="@string/myParts"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/location" />
+
+    <Button
+        android:id="@+id/locationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:padding="8dp"
+        android:text="@string/locationButton"
+        android:textSize="20sp" />
+
+</LinearLayout>

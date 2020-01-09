@@ -2,7 +2,6 @@ package com.example.accidentreport.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.accidentreport.R;
 import com.example.accidentreport.database.DbHelper;
+import com.example.accidentreport.start.MainActivity;
 import com.example.accidentreport.utils.AccidentReportContract;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -85,7 +85,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         cursor.close();
         if(passDb.equals(pass)){
-            Toast.makeText(this,"login CORRECTO: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
+            //Toast.makeText(this,"login CORRECTO: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
+            startActivity(new Intent(this, MainActivity.class));
         }else{
             Toast.makeText(this,"login FAKE: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
         }
