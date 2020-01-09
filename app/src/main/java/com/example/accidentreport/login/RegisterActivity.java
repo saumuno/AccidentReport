@@ -18,6 +18,7 @@ import com.example.accidentreport.utils.AccidentReportContract;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button register_registerButton;
+    Button register_updateButton;
     EditText register_username;
     EditText register_password;
     EditText register_name;
@@ -25,10 +26,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText register_dni;
     EditText register_phone;
 
+    private User userLogged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        userLogged = (User) getIntent().getSerializableExtra("userLogged");
 
         register_username = findViewById(R.id.register_username);
         register_password = findViewById(R.id.register_password);
@@ -39,6 +44,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         register_registerButton = findViewById(R.id.register_registerButton);
         register_registerButton.setOnClickListener(this);
+
+        register_updateButton = findViewById(R.id.register_updateButton);
+        register_updateButton.setOnClickListener(this);
+
+
+        if (userLogged != null) {
+            register_username.setText(userLogged.getUsername());
+            register_password.setText(userLogged.getPassword());
+            register_name.setText(userLogged.getName());
+            register_surnames.setText(userLogged.getSurnames());
+            register_dni.setText(userLogged.getDni());
+            register_phone.setText(userLogged.getPhone());
+            register_registerButton.setVisibility(View.GONE);
+            register_updateButton.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -58,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         newUser.setSurnames(surnames);
         newUser.setDni(dni);
         newUser.setPhone(phone);
-
         if (validateRegister(newUser)) {
             DbHelper dbHelper = new DbHelper(this);
             SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -70,18 +89,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             values.put(AccidentReportContract.TableUserColumns.SURNAMES, surnames);
             values.put(AccidentReportContract.TableUserColumns.DNI, dni);
             values.put(AccidentReportContract.TableUserColumns.PHONE, phone);
+            switch (v.getId()) {
+                case R.id.register_registerButton:
+                    long insertRows = db.insert(AccidentReportContract.TABLE_USER, null, values);
 
+                    if (insertRows == -1) {
+                        Toast.makeText(this, "Error al registrar el usuario: Username existente", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                case R.id.register_updateButton:
+                    long updateRow = db.update(AccidentReportContract.TABLE_USER, values, "username= ?", new String[]{username});
 
-            long newRowId = db.insert(AccidentReportContract.TABLE_USER, null, values);
-
-            if (newRowId == -1) {
-                Toast.makeText(this, "Error al registrar el usuario: Username existente", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                    if (updateRow == -1) {
+                        Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_LONG).show();
+                    }
+                    break;
             }
         } else {
             Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_LONG).show();
         }
+
     }
 
     private boolean validateRegister(User newUser) {

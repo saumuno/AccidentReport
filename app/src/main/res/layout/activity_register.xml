@@ -187,4 +187,15 @@
         android:text="@string/register"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/register_updateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="8dp"
+        android:text="@string/update"
+        android:textSize="20sp"
+        android:visibility="invisible"/>
+
 </LinearLayout>
