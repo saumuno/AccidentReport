@@ -68,13 +68,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String sortOrder = AccidentReportContract.DEFAULT_SORT_USER;
 
         Cursor cursor = db.query(
-                AccidentReportContract.TABLE_USER,   // The table to query
-                userList,             // The array of columns to return (pass null to get all)
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,                   // don't group the rows
-                null,                   // don't filter by row groups
-                sortOrder               // The sort order
+                AccidentReportContract.TABLE_USER,
+                userList,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
         );
 
         String passDb = "";
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(passDb.equals(pass)){
             Toast.makeText(this,"login CORRECTO: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
         }else{
-            Toast.makeText(this,"login FAKE: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
+            Toast.makeText(this,"Usuario o password incorrecto",Toast.LENGTH_LONG ).show();
         }
     }
 

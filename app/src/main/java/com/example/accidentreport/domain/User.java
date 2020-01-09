@@ -1,8 +1,6 @@
 package com.example.accidentreport.domain;
 
-import java.util.Objects;
-
-public class user {
+public class User {
 
     private String username;
     private String password;
