@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.accidentreport.R;
+import com.example.accidentreport.domain.User;
+import com.example.accidentreport.login.RegisterActivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
     TextView txtlocation;
     Button buttonLocation;
 
+    private User userLogged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //RECUPERAR USUARIO LOGGEADO
+        userLogged = (User) getIntent().getSerializableExtra("userLogged");
+
         //Para el gps
         txtlocation= findViewById(R.id.location);
         buttonLocation=findViewById(R.id.locationButton);
@@ -93,7 +102,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile:
-                Toast.makeText(this, "Has pinchado en el boton MyProfile", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, RegisterActivity.class);
+                intent.putExtra("userLogged", userLogged);
+                startActivity(intent);
                 return true;
             case R.id.action_shutdown:
                 Toast.makeText(this, "Has pinchado en el boton Shutdown", Toast.LENGTH_SHORT).show();

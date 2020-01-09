@@ -1,7 +1,5 @@
 package com.example.accidentreport.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,17 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.accidentreport.R;
 import com.example.accidentreport.database.DbHelper;
+import com.example.accidentreport.domain.User;
 import com.example.accidentreport.start.MainActivity;
 import com.example.accidentreport.utils.AccidentReportContract;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button loginButton;
     Button registerButton;
     EditText username;
     EditText password;
+
+    private User userLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         String user = username.getText().toString();
         String pass = password.getText().toString();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.loginButton:
-                if(user.isEmpty() || pass.isEmpty()){
-                    Toast.makeText(this,"Introduzca usuario y password",Toast.LENGTH_LONG ).show();
-                }else {
+                if (user.isEmpty() || pass.isEmpty()) {
+                    Toast.makeText(this, "Introduzca usuario y password", Toast.LENGTH_LONG).show();
+                } else {
                     login(user, pass);
                 }
                 break;
@@ -57,17 +60,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void login(String user, String pass){
+    public void login(String user, String pass) {
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] userList = {
                 AccidentReportContract.TableUserColumns.USERNAME,
-                AccidentReportContract.TableUserColumns.PASSWORD
+                AccidentReportContract.TableUserColumns.PASSWORD,
+                AccidentReportContract.TableUserColumns.NAME,
+                AccidentReportContract.TableUserColumns.SURNAMES,
+                AccidentReportContract.TableUserColumns.DNI,
+                AccidentReportContract.TableUserColumns.PHONE
         };
 
         String selection = AccidentReportContract.TableUserColumns.USERNAME + " = ?";
-        String[] selectionArgs = { user };
+        String[] selectionArgs = {user};
 
         String sortOrder = AccidentReportContract.DEFAULT_SORT_USER;
 
@@ -81,21 +88,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 sortOrder
         );
 
-        String passDb = "";
-        while(cursor.moveToNext()) {
-            passDb = cursor.getString(
-                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.PASSWORD));
+        while (cursor.moveToNext()) {
+            userLogged = new User();
+            userLogged.setUsername(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.USERNAME)));
+            userLogged.setPassword(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.PASSWORD)));
+            userLogged.setName(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.NAME)));
+            userLogged.setSurnames(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.SURNAMES)));
+            userLogged.setDni(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.DNI)));
+            userLogged.setPhone(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableUserColumns.PHONE)));
 
         }
         cursor.close();
-        if(passDb.equals(pass)){
-            startActivity(new Intent(this, MainActivity.class));
-        }else{
-            Toast.makeText(this,"Usuario o password incorrecto",Toast.LENGTH_LONG ).show();
+        if (pass.equals(userLogged.getPassword())) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("userLogged", userLogged);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Usuario o password incorrecto", Toast.LENGTH_LONG).show();
         }
     }
 
-    public void register(){
+    public void register() {
         startActivity(new Intent(this, RegisterActivity.class));
     }
 }

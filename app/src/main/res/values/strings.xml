@@ -4,6 +4,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="update">Update</string>
     <string name="name">Name</string>
     <string name="surnames">Surnames</string>
     <string name="dni">DNI</string>
