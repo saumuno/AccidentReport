@@ -44,7 +44,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String pass = password.getText().toString();
         switch (v.getId()){
             case R.id.loginButton:
-                login(user,pass);
+                if(user.isEmpty() || pass.isEmpty()){
+                    Toast.makeText(this,"Introduzca usuario y password",Toast.LENGTH_LONG ).show();
+                }else {
+                    login(user, pass);
+                }
                 break;
             case R.id.registerButton:
                 register();
@@ -85,7 +89,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         cursor.close();
         if(passDb.equals(pass)){
-            //Toast.makeText(this,"login CORRECTO: user: "+ user +" pass: "+ pass,Toast.LENGTH_LONG ).show();
             startActivity(new Intent(this, MainActivity.class));
         }else{
             Toast.makeText(this,"Usuario o password incorrecto",Toast.LENGTH_LONG ).show();
