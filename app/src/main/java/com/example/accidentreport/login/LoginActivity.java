@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
         cursor.close();
-        if (pass.equals(userLogged.getPassword())) {
+        if (userLogged != null && pass.equals(userLogged.getPassword())) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userLogged", userLogged);
             startActivity(intent);
