@@ -25,19 +25,5 @@
         android:text="@string/myParts"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/location" />
-
-    <Button
-        android:id="@+id/locationButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:padding="8dp"
-        android:text="@string/locationButton"
-        android:textSize="20sp" />
 
 </LinearLayout>

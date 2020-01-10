@@ -4,6 +4,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="save">Save</string>
     <string name="update">Update</string>
     <string name="name">Name</string>
     <string name="surnames">Surnames</string>
@@ -15,4 +16,15 @@
     <string name="myParts">My parts</string>
     <string name="location">Location</string>
     <string name="locationButton">Location</string>
+    <string name="locationButtonPERMISO">Location PERMISO</string>
+    <string name="carA">Car A</string>
+    <string name="carB">Car B</string>
+    <string name="owner_car_name">Owner name</string>
+    <string name="owner_car_surnanames">Owner surnames</string>
+    <string name="owner_car_phone">Ouwen phone</string>
+    <string name="owner_car_dni">Owner dni</string>
+    <string name="car_registration">Car registration</string>
+    <string name="accident_reason">Accident reason</string>
+    <string name="accident_location">Accident location</string>
+    <string name="accident_photo">Accident photo</string>
 </resources>
