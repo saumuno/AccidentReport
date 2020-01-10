@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".report.AccidentReportActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reason_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/accident_reason"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:maxLength="300"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/accident_location" />
+
+            <Button
+                android:id="@+id/locationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:padding="8dp"
+                android:text="@string/locationButton"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/photo_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/accident_photo"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+
+            <TextView
+                android:id="@+id/carA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/carA"
+                android:textColor="@android:color/black"
+                android:textSize="25dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/name_carA_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/owner_car_name"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/name_carA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_toEndOf="@+id/name_carA_label"
+                    android:inputType="text"
+                    android:maxLength="15"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/surnames_carA_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/owner_car_surnanames"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/surnames_carA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toEndOf="@+id/surnames_carA_label"
+                    android:maxLength="30"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/phone_carA_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/owner_car_phone"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/phone_carA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_toEndOf="@+id/phone_carA_label"
+                    android:gravity="top|center_horizontal"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/dni_carA_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/owner_car_dni"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/dni_carA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_toEndOf="@+id/dni_carA_label"
+                    android:gravity="top|center_horizontal"
+                    android:maxLength="9"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/registration_carA_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_toEndOf="@+id/registration_carA"
+                    android:text="@string/car_registration"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/registration_carA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_toEndOf="@+id/registration_carA_label"
+                    android:maxLength="9"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/carB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/carB"
+                    android:textColor="@android:color/black"
+                    android:textSize="25dp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@android:color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name_carB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/owner_car_name"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/name_carB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toEndOf="@+id/name_carB_label"
+                        android:inputType="text"
+                        android:maxLength="15"
+                        android:padding="10dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/surnames_carB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/owner_car_surnanames"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/surnames_carB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@+id/surnames_carB_label"
+                        android:maxLength="30"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@android:color/black"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/phone_carB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/owner_car_phone"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/phone_carB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toEndOf="@+id/phone_carB_label"
+                        android:gravity="top|center_horizontal"
+                        android:inputType="phone"
+                        android:maxLength="12"
+                        android:padding="10dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/dni_carB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/owner_car_dni"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/dni_carB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toEndOf="@+id/dni_carB_label"
+                        android:gravity="top|center_horizontal"
+                        android:maxLength="9"
+                        android:padding="10dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/registration_carB_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toEndOf="@+id/registration_carB"
+                        android:text="@string/car_registration"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+
+                    <EditText
+                        android:id="@+id/registration_carB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toEndOf="@+id/registration_carB_label"
+                        android:maxLength="9"
+                        android:textColor="@android:color/black"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="@string/save"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/updateButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="8dp"
+                    android:text="@string/update"
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
