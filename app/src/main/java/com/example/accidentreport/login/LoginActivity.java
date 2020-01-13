@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,5 +117,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void register() {
         startActivity(new Intent(this, RegisterActivity.class));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            finishAffinity();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

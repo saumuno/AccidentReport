@@ -8,21 +8,21 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/newPartButton"
+        android:id="@+id/newReportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:padding="8dp"
-        android:text="@string/newPart"
+        android:text="@string/newReport"
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/myPartsButton"
+        android:id="@+id/myReportsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:padding="8dp"
-        android:text="@string/myParts"
+        android:text="@string/myReports"
         android:textSize="20sp" />
 
 
