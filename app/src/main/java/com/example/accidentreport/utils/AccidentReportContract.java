@@ -28,7 +28,21 @@ public class AccidentReportContract {
     }
 
     public class TableAccidentReportColumns {
-        public static final String ID = BaseColumns._ID;
-        public static final String USERNAME = "username";
+        public static final String ID = "id";
+        public static final String REASON_ACCIDENT = "reasonAccident";
+        public static final String LOCATION = "location";
+
+        public static final String SURNAMES_A = "surnamesA";
+        public static final String NAME_A = "nameA";
+        public static final String PHONE_A = "phoneA";
+        public static final String DNI_A = "dniA";
+        public static final String REGISTRATION_A = "registrationA";
+
+
+        public static final String SURNAMES_B = "nameB";
+        public static final String NAME_B = "surnamesB";
+        public static final String PHONE_B = "phoneB";
+        public static final String DNI_B = "dniB";
+        public static final String REGISTRATION_B = "registrationB";
     }
 }

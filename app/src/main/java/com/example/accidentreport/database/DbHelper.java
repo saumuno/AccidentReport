@@ -28,13 +28,26 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d(TAG,"onCreate con SQL: " + sqlUser);
         db.execSQL(sqlUser);
 
-//        String sql = String.format("create table %s (%s text primary key, %s text, %s text, %s text, %s text, %s text)"
-//              AccidentReportContract.TABLE_ACCIDENT_REPORT,
-//                AccidentReportContract.TableAccidentReportColumns.ID,
-//                AccidentReportContract.TableAccidentReportColumns.USERNAME); //TODO: Implementar BBDDD accident report
+        String sqlAccidentReport = String.format("create table %s (%s text primary key, %s text," +
+                        " %s text, %s text, %s text, %s text, %s text, %s text, %s text, %s text," +
+                        " %s text, %s text, %s text)",
+              AccidentReportContract.TABLE_ACCIDENT_REPORT,
+                AccidentReportContract.TableAccidentReportColumns.ID,
+                AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT,
+                AccidentReportContract.TableAccidentReportColumns.LOCATION,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_A,
+                AccidentReportContract.TableAccidentReportColumns.NAME_A,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_A,
+                AccidentReportContract.TableAccidentReportColumns.DNI_A,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_A,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_B,
+                AccidentReportContract.TableAccidentReportColumns.NAME_B,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_B,
+                AccidentReportContract.TableAccidentReportColumns.DNI_B,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B);
 
-//        Log.d(TAG,"onCreate con SQL: " + sql);
-//        db.execSQL(sql);
+        Log.d(TAG,"onCreate con SQL: " + sqlAccidentReport);
+        db.execSQL(sqlAccidentReport);
     }
 
 

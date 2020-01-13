@@ -16,6 +16,7 @@
     <string name="myParts">My parts</string>
     <string name="location">Location</string>
     <string name="locationButton">Location</string>
+    <string name="clearLocationButton">Clear location</string>
     <string name="locationButtonPERMISO">Location PERMISO</string>
     <string name="carA">Car A</string>
     <string name="carB">Car B</string>
