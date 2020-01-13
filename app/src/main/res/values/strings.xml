@@ -12,8 +12,8 @@
     <string name="phone">Phone</string>
     <string name="myProfile">MyProfile</string>
     <string name="shutdown">Shutdown</string>
-    <string name="newPart">New part</string>
-    <string name="myParts">My parts</string>
+    <string name="newReport">New Report</string>
+    <string name="myReports">My Reports</string>
     <string name="location">Location</string>
     <string name="locationButton">Location</string>
     <string name="clearLocationButton">Clear location</string>

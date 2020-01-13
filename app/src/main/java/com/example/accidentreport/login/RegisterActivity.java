@@ -1,6 +1,7 @@
 package com.example.accidentreport.login;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -96,7 +97,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (insertRows == -1) {
                         Toast.makeText(this, "Error al registrar el usuario: Username existente", Toast.LENGTH_LONG).show();
                     } else {
+                        startActivity(new Intent(this, LoginActivity.class));
                         Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+
                     }
                     break;
                 case R.id.register_updateButton:

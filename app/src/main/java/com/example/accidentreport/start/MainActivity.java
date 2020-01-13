@@ -1,5 +1,7 @@
 package com.example.accidentreport.start;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,18 +10,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accidentreport.R;
 import com.example.accidentreport.domain.User;
+import com.example.accidentreport.login.LoginActivity;
 import com.example.accidentreport.login.RegisterActivity;
 import com.example.accidentreport.report.AccidentReportActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    Button buttonNewPart;
-    Button buttonMyParts;
+    Button buttonNewReport;
+    Button buttonMyReports;
     MenuItem userId;
 
     private User userLogged;
@@ -33,11 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
 
 
-        buttonNewPart = findViewById(R.id.newPartButton);
-        buttonNewPart.setOnClickListener(this);
+        buttonNewReport = findViewById(R.id.newReportButton);
+        buttonNewReport.setOnClickListener(this);
 
-        buttonMyParts = findViewById(R.id.myPartsButton);
-        buttonMyParts.setOnClickListener(this);
+        buttonMyReports = findViewById(R.id.myReportsButton);
+        buttonMyReports.setOnClickListener(this);
 
 
     }
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 return true;
             case R.id.action_shutdown:
-                Toast.makeText(this, "Has pinchado en el boton Shutdown", Toast.LENGTH_SHORT).show();
+                showAlert();
                 return true;
             default:
                 return false;
@@ -69,15 +73,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.newPartButton:
+            case R.id.newReportButton:
                 Intent intent = new Intent(this, AccidentReportActivity.class);
                 intent.putExtra("userLogged", userLogged);
                 startActivity(intent);
                 break;
-            case R.id.myPartsButton:
+            case R.id.myReportsButton:
                 Toast.makeText(this, "NO ESTA IMPLEMENTADO SUBNORMAL JAJAJA", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+    public void showAlert(){
+        AlertDialog.Builder alertShutdown = new AlertDialog.Builder(this);
+        alertShutdown.setMessage("Estas seguro de que desea cerrar sesión");
+        alertShutdown.setCancelable(true);
+        final Context context= this;
+        alertShutdown.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertShutdown.setPositiveButton(
+                "Sí",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        startActivity(new Intent(context, LoginActivity.class));
+                    }
+                });
+
+
+        AlertDialog alert = alertShutdown.create();
+        alert.show();
     }
 
 }
