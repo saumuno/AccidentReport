@@ -1,40 +1,26 @@
 package com.example.accidentreport.start;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.accidentreport.R;
 import com.example.accidentreport.domain.User;
 import com.example.accidentreport.login.RegisterActivity;
 import com.example.accidentreport.report.AccidentReportActivity;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     Button buttonNewPart;
     Button buttonMyParts;
+    MenuItem userId;
 
     private User userLogged;
 
@@ -46,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //RECUPERAR USUARIO LOGGEADO
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
 
+
         buttonNewPart = findViewById(R.id.newPartButton);
         buttonNewPart.setOnClickListener(this);
 
@@ -53,13 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonMyParts.setOnClickListener(this);
 
 
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        userId = menu.findItem(R.id.userId);
+        userId.setTitle(userLogged.getUsername());
         return true;
     }
 
@@ -77,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return false;
         }
     }
+
 
     @Override
     public void onClick(View v) {
