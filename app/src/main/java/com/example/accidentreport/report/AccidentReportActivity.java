@@ -5,7 +5,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -32,6 +35,7 @@ import com.example.accidentreport.domain.AccidentReport;
 import com.example.accidentreport.domain.User;
 import com.example.accidentreport.utils.AccidentReportContract;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -44,12 +48,12 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    AccidentReport accidentReport;
 
     TextView txtlocation;
     Button buttonLocation;
 
     Button saveButton;
-    //Button updateButton;
 
     TextView id;
     EditText reason;
@@ -72,6 +76,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     private Uri file;
 
     private User userLogged;
+    private AccidentReport accidentReportDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +85,13 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
 
         //RECUPERAR USUARIO LOGGEADO
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
+        String isNewPart = getIntent().getStringExtra("newPart");
+
 
         txtlocation = findViewById(R.id.location);
 
         reason = findViewById(R.id.reason);
-        id = findViewById(R.id.id);
+        id = findViewById(R.id.id_accident_reason);
 
         name_carA = findViewById(R.id.name_carA);
         surnames_carA = findViewById(R.id.surnames_carA);
@@ -108,13 +115,27 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        //updateButton = findViewById(R.id.updateButton);
-        //updateButton.setOnClickListener(this);
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             takePictureButton.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
+
+        if (userLogged != null) {
+            if ("true".equalsIgnoreCase(isNewPart)) {
+                accidentReport = new AccidentReport();
+                loadUserLoggerdData();
+            } else {
+                accidentReportDB = myReports(userLogged.getUsername());
+                if (accidentReportDB != null) {
+                    loadAccidentReportData();
+                    disabledEditMode();
+                }else{
+                    accidentReport = new AccidentReport();
+                    loadUserLoggerdData();
+                }
+            }
+        }
+
 
     }
 
@@ -134,17 +155,9 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                 }
                 break;
             case R.id.saveButton:
-                //case R.id.updateButton:
-                AccidentReport accidentReport = new AccidentReport();
 
-                //  if (id.getText().toString().isEmpty()) {
-                accidentReport.setId(UUID.randomUUID().toString());
-                //}else {
-                //  accidentReport.setId(id.getText().toString());
-                //}
                 accidentReport.setReasonAccident(reason.getText().toString());
                 accidentReport.setLocation(txtlocation.getText().toString());
-                //imageView.getDrawable().toString();
 
                 accidentReport.setNameA(name_carA.getText().toString());
                 accidentReport.setSurnamesA(surnames_carA.getText().toString());
@@ -166,8 +179,13 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
 
 
                     values.put(AccidentReportContract.TableAccidentReportColumns.ID, accidentReport.getId());
+                    values.put(AccidentReportContract.TableAccidentReportColumns.USERNAME_PART, userLogged.getUsername());
                     values.put(AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT, accidentReport.getReasonAccident());
                     values.put(AccidentReportContract.TableAccidentReportColumns.LOCATION, accidentReport.getLocation());
+
+                    //SAVE PHOTO
+                    byte[] data = getBitmapAsByteArray(accidentReport.getImage());
+                    values.put(AccidentReportContract.TableAccidentReportColumns.IMAGE, data);
 
                     values.put(AccidentReportContract.TableAccidentReportColumns.NAME_A, accidentReport.getNameA());
                     values.put(AccidentReportContract.TableAccidentReportColumns.SURNAMES_A, accidentReport.getSurnamesA());
@@ -181,8 +199,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                     values.put(AccidentReportContract.TableAccidentReportColumns.DNI_B, accidentReport.getDniB());
                     values.put(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B, accidentReport.getRegistrationB());
 
-                    //switch (v.getId()) {
-                    //  case R.id.saveButton:
+
                     long insertRows = db.insert(AccidentReportContract.TABLE_ACCIDENT_REPORT, null, values);
 
                     if (insertRows == -1) {
@@ -190,23 +207,18 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                     } else {
                         Toast.makeText(this, "Parte registrado correctamente", Toast.LENGTH_LONG).show();
                     }
-                    // break;
-                       /* case R.id.updateButton:
-                            long updateRow = db.update(AccidentReportContract.TABLE_ACCIDENT_REPORT, values, "id= ?", new String[]{id.getText().toString()});
-
-                            if (updateRow == -1) {
-                                Toast.makeText(this, "Error al actualizar el parte", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(this, "Parte actualizado correctamente", Toast.LENGTH_LONG).show();
-                            }
-                            break;*/
-                    //}
                 } else {
                     Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
 
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 
     public void getUbication() {
@@ -266,14 +278,16 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                imageView.setImageURI(file);
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                imageView.setImageBitmap(bitmap);
+                accidentReport.setImage(bitmap);
             }
         }
     }
 
     private static File getOutputMediaFile() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "CameraDemo");
+                Environment.DIRECTORY_PICTURES), "Camera");
 
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
@@ -289,6 +303,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     private Boolean validateAccidentReport(AccidentReport accidentReport) {
         return !accidentReport.getReasonAccident().isEmpty() &&
                 !accidentReport.getLocation().isEmpty() &&
+                accidentReport.getImage() != null &&
                 !accidentReport.getNameA().isEmpty() &&
                 !accidentReport.getSurnamesA().isEmpty() &&
                 !accidentReport.getDniA().isEmpty() &&
@@ -299,8 +314,138 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                 !accidentReport.getDniB().isEmpty() &&
                 !accidentReport.getPhoneB().isEmpty() &&
                 !accidentReport.getRegistrationB().isEmpty();
+    }
+
+    private void loadUserLoggerdData() {
+        accidentReport.setId(UUID.randomUUID().toString());
+
+        id.setText(accidentReport.getId());
+        name_carA.setText(userLogged.getName());
+        surnames_carA.setText(userLogged.getSurnames());
+        phone_carA.setText(userLogged.getPhone());
+        dni_carA.setText(userLogged.getDni());
+    }
+
+    private void loadAccidentReportData() {
+
+        id.setText(accidentReportDB.getId());
+        reason.setText(accidentReportDB.getReasonAccident());
+        txtlocation.setText(accidentReportDB.getLocation());
+        imageView.setImageBitmap(accidentReportDB.getImage());
+
+        name_carA.setText(accidentReportDB.getNameA());
+        surnames_carA.setText(accidentReportDB.getSurnamesA());
+        dni_carA.setText(accidentReportDB.getDniA());
+        phone_carA.setText(accidentReportDB.getPhoneA());
+        registration_carA.setText(accidentReportDB.getRegistrationA());
+
+        name_carB.setText(accidentReportDB.getNameB());
+        surnames_carB.setText(accidentReportDB.getSurnamesB());
+        dni_carB.setText(accidentReportDB.getDniB());
+        phone_carB.setText(accidentReportDB.getPhoneB());
+        registration_carB.setText(accidentReportDB.getRegistrationB());
+    }
+
+    public AccidentReport myReports(String username) {
+        DbHelper dbHelper = new DbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] accidentReportList = {
+                AccidentReportContract.TableAccidentReportColumns.ID,
+                AccidentReportContract.TableAccidentReportColumns.USERNAME_PART,
+                AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT,
+                AccidentReportContract.TableAccidentReportColumns.LOCATION,
+                AccidentReportContract.TableAccidentReportColumns.IMAGE,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_A,
+                AccidentReportContract.TableAccidentReportColumns.NAME_A,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_A,
+                AccidentReportContract.TableAccidentReportColumns.DNI_A,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_A,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_B,
+                AccidentReportContract.TableAccidentReportColumns.NAME_B,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_B,
+                AccidentReportContract.TableAccidentReportColumns.DNI_B,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B
+        };
+
+        String selection = AccidentReportContract.TableAccidentReportColumns.USERNAME_PART + " = ?";
+        String[] selectionArgs = {username};
+
+        String sortOrder = AccidentReportContract.DEFAULT_SORT_ACCIDENT_REPORT;
+
+        Cursor cursor = db.query(
+                AccidentReportContract.TABLE_ACCIDENT_REPORT,
+                accidentReportList,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        while (cursor.moveToNext()) {
+            accidentReport = new AccidentReport();
+            accidentReport.setId(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.ID)));
+            accidentReport.setUsernamePart(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.USERNAME_PART)));
+            accidentReport.setReasonAccident(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT)));
+            accidentReport.setLocation(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.LOCATION)));
+
+            //GET IMAGE
+            byte[] imgByte = cursor.getBlob(cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.IMAGE));
+            accidentReport.setImage(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
+
+            accidentReport.setSurnamesA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.SURNAMES_A)));
+            accidentReport.setNameA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.NAME_A)));
+            accidentReport.setPhoneA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.PHONE_A)));
+            accidentReport.setDniA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.DNI_A)));
+            accidentReport.setRegistrationA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_A)));
+            accidentReport.setSurnamesB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.SURNAMES_B)));
+            accidentReport.setNameB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.NAME_B)));
+            accidentReport.setPhoneB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.PHONE_B)));
+            accidentReport.setDniB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.DNI_B)));
+            accidentReport.setRegistrationB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B)));
 
 
+        }
+        cursor.close();
+        if (accidentReport != null) {
+            return accidentReport;
+        } else {
+            Toast.makeText(this, "Actualmente no tiene partes", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+    }
+
+    private void disabledEditMode() {
+        saveButton.setVisibility(View.GONE);
+        buttonLocation.setVisibility(View.GONE);
+        takePictureButton.setVisibility(View.GONE);
+        reason.setEnabled(Boolean.FALSE);
+        name_carA.setEnabled(Boolean.FALSE);
+        surnames_carA.setEnabled(Boolean.FALSE);
+        phone_carA.setEnabled(Boolean.FALSE);
+        dni_carA.setEnabled(Boolean.FALSE);
+        registration_carA.setEnabled(Boolean.FALSE);
+        name_carB.setEnabled(Boolean.FALSE);
+        surnames_carB.setEnabled(Boolean.FALSE);
+        phone_carB.setEnabled(Boolean.FALSE);
+        dni_carB.setEnabled(Boolean.FALSE);
+        registration_carB.setEnabled(Boolean.FALSE);
     }
 
 
