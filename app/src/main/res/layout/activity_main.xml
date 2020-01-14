@@ -25,5 +25,14 @@
         android:text="@string/myReports"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/myLastReportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:padding="8dp"
+        android:text="@string/myLastReport"
+        android:textSize="20sp" />
+
 
 </LinearLayout>

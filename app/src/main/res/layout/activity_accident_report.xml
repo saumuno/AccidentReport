@@ -17,16 +17,26 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/accident_report_id"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/id_accident_reason"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text=""
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
                 android:id="@+id/reason_label"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -42,56 +52,64 @@
                 android:layout_marginEnd="10dp"
                 android:maxLength="300"
                 android:textColor="@android:color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:text="@string/accident_location"
+                android:textColor="@android:color/black"
                 android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/accident_location"
-                android:textColor="@android:color/black"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:textSize="20dp" />
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/locationButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:padding="8dp"
                 android:text="@string/locationButton"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/photo_label"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/accident_photo"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/imageview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_above="@+id/button_image"/>
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
 
             <Button
                 android:id="@+id/button_image"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:onClick="takePicture"
-                android:text="Take a picture!"/>
-
-<!--            <TextView-->
-<!--                android:id="@+id/photo_label"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="10dp"-->
-<!--                android:text="@string/accident_photo"-->
-<!--                android:textColor="@android:color/black"-->
-<!--                android:textSize="20dp" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/accident_photo"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"/>-->
+                android:text="@string/take_photo"
+                android:padding="8dp"
+                android:textSize="20sp"/>
 
 
             <TextView
@@ -116,6 +134,7 @@
 
                 <TextView
                     android:id="@+id/name_carA_label"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -128,12 +147,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/name_carA_label"
                     android:inputType="text"
                     android:maxLength="15"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
 
             </LinearLayout>
 
@@ -144,6 +162,7 @@
 
                 <TextView
                     android:id="@+id/surnames_carA_label"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -157,11 +176,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/surnames_carA_label"
                     android:maxLength="30"
                     android:textColor="@android:color/black"
                     android:textColorHint="@android:color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
 
             </LinearLayout>
 
@@ -174,6 +192,7 @@
                     android:id="@+id/phone_carA_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_margin="10dp"
                     android:text="@string/owner_car_phone"
                     android:textColor="@android:color/black"
@@ -184,13 +203,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/phone_carA_label"
-                    android:gravity="top|center_horizontal"
                     android:inputType="phone"
                     android:maxLength="12"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -201,6 +218,7 @@
                 <TextView
                     android:id="@+id/dni_carA_label"
                     android:layout_width="wrap_content"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="@string/owner_car_dni"
@@ -212,12 +230,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/dni_carA_label"
-                    android:gravity="top|center_horizontal"
                     android:maxLength="9"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -230,8 +246,8 @@
                     android:id="@+id/registration_carA_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/registration_carA"
                     android:text="@string/car_registration"
                     android:textColor="@android:color/black"
                     android:textSize="20dp" />
@@ -241,10 +257,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:layout_toEndOf="@+id/registration_carA_label"
                     android:maxLength="9"
                     android:textColor="@android:color/black"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -256,6 +271,7 @@
                     android:id="@+id/carB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:layout_margin="10dp"
                     android:text="@string/carB"
                     android:textColor="@android:color/black"
@@ -277,6 +293,7 @@
                         android:id="@+id/name_carB_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:layout_margin="10dp"
                         android:text="@string/owner_car_name"
                         android:textColor="@android:color/black"
@@ -287,12 +304,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/name_carB_label"
                         android:inputType="text"
                         android:maxLength="15"
                         android:padding="10dp"
                         android:textColor="@android:color/black"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
@@ -306,6 +322,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
+                        android:textStyle="bold"
                         android:text="@string/owner_car_surnanames"
                         android:textColor="@android:color/black"
                         android:textSize="20dp" />
@@ -316,11 +333,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@+id/surnames_carB_label"
                         android:maxLength="30"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/black"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
 
                 </LinearLayout>
 
@@ -336,6 +352,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="@string/owner_car_phone"
+                        android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="20dp" />
 
@@ -344,13 +361,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/phone_carB_label"
-                        android:gravity="top|center_horizontal"
                         android:inputType="phone"
                         android:maxLength="12"
                         android:padding="10dp"
                         android:textColor="@android:color/black"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -362,6 +377,7 @@
                         android:id="@+id/dni_carB_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:layout_margin="10dp"
                         android:text="@string/owner_car_dni"
                         android:textColor="@android:color/black"
@@ -372,12 +388,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/dni_carB_label"
-                        android:gravity="top|center_horizontal"
                         android:maxLength="9"
                         android:padding="10dp"
                         android:textColor="@android:color/black"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
 
@@ -392,9 +406,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/registration_carB"
                         android:text="@string/car_registration"
                         android:textColor="@android:color/black"
+                        android:textStyle="bold"
                         android:textSize="20dp" />
 
                     <EditText
@@ -402,10 +416,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_toEndOf="@+id/registration_carB_label"
                         android:maxLength="9"
                         android:textColor="@android:color/black"
-                        android:textSize="20dp" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
 
@@ -419,15 +432,6 @@
                     android:text="@string/save"
                     android:textSize="20sp" />
 
-                <!--<Button
-                    android:id="@+id/updateButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:padding="8dp"
-                    android:text="@string/update"
-                    android:textSize="20sp" />-->
             </LinearLayout>
 
         </LinearLayout>

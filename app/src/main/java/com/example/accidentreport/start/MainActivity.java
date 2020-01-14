@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accidentreport.R;
+import com.example.accidentreport.domain.AccidentReport;
 import com.example.accidentreport.domain.User;
 import com.example.accidentreport.login.LoginActivity;
 import com.example.accidentreport.login.RegisterActivity;
@@ -24,9 +25,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Button buttonNewReport;
     Button buttonMyReports;
+    Button buttonMyLastReport;
     MenuItem userId;
 
     private User userLogged;
+    private AccidentReport accidentReport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonMyReports = findViewById(R.id.myReportsButton);
         buttonMyReports.setOnClickListener(this);
+
+        buttonMyLastReport = findViewById(R.id.myLastReportButton);
+        buttonMyLastReport.setOnClickListener(this);
 
 
     }
@@ -76,18 +82,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.newReportButton:
                 Intent intent = new Intent(this, AccidentReportActivity.class);
                 intent.putExtra("userLogged", userLogged);
+                intent.putExtra("newPart", "true");
                 startActivity(intent);
                 break;
-            case R.id.myReportsButton:
-                Toast.makeText(this, "NO ESTA IMPLEMENTADO SUBNORMAL JAJAJA", Toast.LENGTH_SHORT).show();
+            case R.id.myLastReportButton:
+                Intent intentMyLastReport = new Intent(this, AccidentReportActivity.class);
+                intentMyLastReport.putExtra("userLogged", userLogged);
+                intentMyLastReport.putExtra("newPart", "false");
+                startActivity(intentMyLastReport);
                 break;
+            case R.id.myReportsButton:
+                //TODO: HACER EL FRAGMENT LIST
+                Toast.makeText(this, "POR IMPLEMENTAR", Toast.LENGTH_LONG).show();
+               /* Intent intentMyReports = new Intent(this, AccidentReportActivity.class);
+                intentMyReports.putExtra("userLogged", userLogged);
+                intentMyReports.putExtra("newPart", "false");
+                startActivity(intentMyReports);*/
         }
     }
-    public void showAlert(){
+
+    public void showAlert() {
         AlertDialog.Builder alertShutdown = new AlertDialog.Builder(this);
         alertShutdown.setMessage("Estas seguro de que desea cerrar sesión");
         alertShutdown.setCancelable(true);
-        final Context context= this;
+        final Context context = this;
         alertShutdown.setNegativeButton(
                 "No",
                 new DialogInterface.OnClickListener() {
@@ -109,5 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog alert = alertShutdown.create();
         alert.show();
     }
+
 
 }

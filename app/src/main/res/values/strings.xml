@@ -12,10 +12,11 @@
     <string name="phone">Phone</string>
     <string name="myProfile">MyProfile</string>
     <string name="shutdown">Shutdown</string>
-    <string name="newReport">New Report</string>
-    <string name="myReports">My Reports</string>
+    <string name="newReport">New report</string>
+    <string name="myReports">My reports</string>
+    <string name="myLastReport">My last reports</string>
     <string name="location">Location</string>
-    <string name="locationButton">Location</string>
+    <string name="locationButton">Get my location</string>
     <string name="clearLocationButton">Clear location</string>
     <string name="locationButtonPERMISO">Location PERMISO</string>
     <string name="carA">Car A</string>
@@ -28,4 +29,6 @@
     <string name="accident_reason">Accident reason</string>
     <string name="accident_location">Accident location</string>
     <string name="accident_photo">Accident photo</string>
+    <string name="accident_report_id">Accident report ID</string>
+    <string name="take_photo">Take a photo</string>
 </resources>

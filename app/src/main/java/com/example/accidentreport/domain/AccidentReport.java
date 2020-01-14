@@ -1,10 +1,14 @@
 package com.example.accidentreport.domain;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class AccidentReport implements Serializable {
 
     private String id;
+    private String usernamePart;
+    private Bitmap image;
 
     private String reasonAccident;
     private String location;
@@ -27,6 +31,22 @@ public class AccidentReport implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUsernamePart() {
+        return usernamePart;
+    }
+
+    public void setUsernamePart(String usernamePart) {
+        this.usernamePart = usernamePart;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     public String getReasonAccident() {

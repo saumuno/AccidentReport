@@ -29,12 +29,14 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(sqlUser);
 
         String sqlAccidentReport = String.format("create table %s (%s text primary key, %s text," +
-                        " %s text, %s text, %s text, %s text, %s text, %s text, %s text, %s text," +
-                        " %s text, %s text, %s text)",
+                        " %s text, %s text, %s BLOB, %s text, %s text, %s text, %s text, %s text, %s text," +
+                        " %s text, %s text, %s text, %s text)",
               AccidentReportContract.TABLE_ACCIDENT_REPORT,
                 AccidentReportContract.TableAccidentReportColumns.ID,
+                AccidentReportContract.TableAccidentReportColumns.USERNAME_PART,
                 AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT,
                 AccidentReportContract.TableAccidentReportColumns.LOCATION,
+                AccidentReportContract.TableAccidentReportColumns.IMAGE,
                 AccidentReportContract.TableAccidentReportColumns.SURNAMES_A,
                 AccidentReportContract.TableAccidentReportColumns.NAME_A,
                 AccidentReportContract.TableAccidentReportColumns.PHONE_A,

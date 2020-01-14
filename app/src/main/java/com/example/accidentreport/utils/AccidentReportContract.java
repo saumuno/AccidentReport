@@ -29,8 +29,11 @@ public class AccidentReportContract {
 
     public class TableAccidentReportColumns {
         public static final String ID = "id";
+        public static final String USERNAME_PART = "usernamePart";
+
         public static final String REASON_ACCIDENT = "reasonAccident";
         public static final String LOCATION = "location";
+        public static final String IMAGE = "image";
 
         public static final String SURNAMES_A = "surnamesA";
         public static final String NAME_A = "nameA";
