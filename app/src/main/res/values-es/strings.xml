@@ -38,8 +38,8 @@
     <string name="user_update_error">Error al actualizar el usuario</string>
     <string name="user_update_correct">Usuario actualizado correctamente</string>
     <string name="fill_in_all_fields">Por favor, rellene todos los campos</string>
-    <string name="report_save_error">Error al registrar el usuario: Username existente</string>
-    <string name="report_save_correct">Usuario registrado correctamente</string>
+    <string name="report_save_error">Error al registrar el parte</string>
+    <string name="report_save_correct">Parte registrado correctamente</string>
     <string name="not_reports">Actualmente no tiene partes</string>
     <string name="closed_sesion_answer">¿Está seguro de que desea cerrar sesión?</string>
     <string name="yes">Sí</string>

@@ -80,12 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, AccidentReportActivity.class);
                 intent.putExtra("userLogged", userLogged);
                 intent.putExtra("newPart", "true");
+                intent.putExtra("reportId", "0");
                 startActivity(intent);
                 break;
             case R.id.myLastReportButton:
                 Intent intentMyLastReport = new Intent(this, AccidentReportActivity.class);
                 intentMyLastReport.putExtra("userLogged", userLogged);
                 intentMyLastReport.putExtra("newPart", "false");
+                intentMyLastReport.putExtra("reportId", "0");
                 startActivity(intentMyLastReport);
                 break;
             case R.id.myReportsButton:
