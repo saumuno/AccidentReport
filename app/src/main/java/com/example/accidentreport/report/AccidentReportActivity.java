@@ -84,6 +84,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
 
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
         String isNewPart = getIntent().getStringExtra("newPart");
+        String reportId = getIntent().getStringExtra("reportId");
 
         txtlocation = findViewById(R.id.location);
         reason = findViewById(R.id.reason);
@@ -121,7 +122,11 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                 accidentReport = new AccidentReport();
                 loadUserLoggerdData();
             } else {
-                accidentReportDB = myLastReport(userLogged.getUsername());
+                if(reportId.equals("0")){
+                    accidentReportDB = myLastReport(userLogged.getUsername());
+                }else{
+                    accidentReportDB = getReport(reportId);
+                }
                 if (accidentReportDB != null) {
                     loadAccidentReportData();
                     disabledEditMode();
@@ -364,6 +369,90 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
 
         String selection = AccidentReportContract.TableAccidentReportColumns.USERNAME_PART + " = ?";
         String[] selectionArgs = {username};
+
+        String sortOrder = AccidentReportContract.DEFAULT_SORT_ACCIDENT_REPORT;
+
+        Cursor cursor = db.query(
+                AccidentReportContract.TABLE_ACCIDENT_REPORT,
+                accidentReportList,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (cursor.moveToFirst()) {
+            accidentReport = new AccidentReport();
+            accidentReport.setId(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.ID)));
+            accidentReport.setUsernamePart(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.USERNAME_PART)));
+            accidentReport.setReasonAccident(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT)));
+            accidentReport.setLocation(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.LOCATION)));
+
+            //GET IMAGE
+            byte[] imgByte = cursor.getBlob(cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.IMAGE));
+            accidentReport.setImage(BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length));
+
+            accidentReport.setSurnamesA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.SURNAMES_A)));
+            accidentReport.setNameA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.NAME_A)));
+            accidentReport.setPhoneA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.PHONE_A)));
+            accidentReport.setDniA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.DNI_A)));
+            accidentReport.setRegistrationA(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_A)));
+            accidentReport.setSurnamesB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.SURNAMES_B)));
+            accidentReport.setNameB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.NAME_B)));
+            accidentReport.setPhoneB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.PHONE_B)));
+            accidentReport.setDniB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.DNI_B)));
+            accidentReport.setRegistrationB(cursor.getString(
+                    cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B)));
+        }
+        cursor.close();
+
+        if (accidentReport != null) {
+            return accidentReport;
+        } else {
+            Toast.makeText(this, getString(R.string.not_reports), Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+    }
+
+    public AccidentReport getReport(String id) {
+        DbHelper dbHelper = new DbHelper(this);
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] accidentReportList = {
+                AccidentReportContract.TableAccidentReportColumns.ID,
+                AccidentReportContract.TableAccidentReportColumns.USERNAME_PART,
+                AccidentReportContract.TableAccidentReportColumns.REASON_ACCIDENT,
+                AccidentReportContract.TableAccidentReportColumns.LOCATION,
+                AccidentReportContract.TableAccidentReportColumns.IMAGE,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_A,
+                AccidentReportContract.TableAccidentReportColumns.NAME_A,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_A,
+                AccidentReportContract.TableAccidentReportColumns.DNI_A,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_A,
+                AccidentReportContract.TableAccidentReportColumns.SURNAMES_B,
+                AccidentReportContract.TableAccidentReportColumns.NAME_B,
+                AccidentReportContract.TableAccidentReportColumns.PHONE_B,
+                AccidentReportContract.TableAccidentReportColumns.DNI_B,
+                AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B
+        };
+
+        String selection = AccidentReportContract.TableAccidentReportColumns.ID + " = ?";
+        String[] selectionArgs = {id};
 
         String sortOrder = AccidentReportContract.DEFAULT_SORT_ACCIDENT_REPORT;
 
