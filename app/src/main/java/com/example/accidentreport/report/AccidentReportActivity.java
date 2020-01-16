@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.example.accidentreport.R;
 import com.example.accidentreport.database.DbHelper;
 import com.example.accidentreport.domain.AccidentReport;
 import com.example.accidentreport.domain.User;
+import com.example.accidentreport.start.MainActivity;
 import com.example.accidentreport.utils.AccidentReportContract;
 
 import java.io.ByteArrayOutputStream;
@@ -42,11 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class AccidentReportActivity extends AppCompatActivity implements View.OnClickListener {
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     AccidentReport accidentReport;
 
@@ -83,13 +82,10 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accident_report);
 
-        //RECUPERAR USUARIO LOGGEADO
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
         String isNewPart = getIntent().getStringExtra("newPart");
 
-
         txtlocation = findViewById(R.id.location);
-
         reason = findViewById(R.id.reason);
         id = findViewById(R.id.id_accident_reason);
 
@@ -125,11 +121,11 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                 accidentReport = new AccidentReport();
                 loadUserLoggerdData();
             } else {
-                accidentReportDB = myReports(userLogged.getUsername());
+                accidentReportDB = myLastReport(userLogged.getUsername());
                 if (accidentReportDB != null) {
                     loadAccidentReportData();
                     disabledEditMode();
-                }else{
+                } else {
                     accidentReport = new AccidentReport();
                     loadUserLoggerdData();
                 }
@@ -203,12 +199,15 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                     long insertRows = db.insert(AccidentReportContract.TABLE_ACCIDENT_REPORT, null, values);
 
                     if (insertRows == -1) {
-                        Toast.makeText(this, "Error al registrar el parte", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.report_save_error), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(this, "Parte registrado correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.report_save_correct), Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.putExtra("userLogged", userLogged);
+                        startActivity(intent);
                     }
                 } else {
-                    Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.fill_in_all_fields), Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -224,19 +223,18 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     public void getUbication() {
         LocationManager locationManager = (LocationManager) AccidentReportActivity.this.getSystemService(Context.LOCATION_SERVICE);
 
-        // Define a listener that responds to location updates
+
         LocationListener locationListener = new LocationListener() {
 
             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
                     List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                     txtlocation.setText((address.get(0).getAddressLine(0)));
+                    txtlocation.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -249,11 +247,8 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
             }
         };
         int permissionCheck = ContextCompat.checkSelfPermission(AccidentReportActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
-        // Register the listener with the Location Manager to receive location updates
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);// para el emulador
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);// para el movil
-
-
     }
 
     @Override
@@ -271,14 +266,15 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
         file = Uri.fromFile(getOutputMediaFile());
         intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
 
-        startActivityForResult(intent, 100);
+        startActivityForResult(intent, 2);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 100) {
+        if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                imageView.setVisibility(View.VISIBLE);
                 imageView.setImageBitmap(bitmap);
                 accidentReport.setImage(bitmap);
             }
@@ -317,8 +313,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     }
 
     private void loadUserLoggerdData() {
-        accidentReport.setId(UUID.randomUUID().toString());
-
+        accidentReport.setId(String.valueOf(new Date().getTime()));
         id.setText(accidentReport.getId());
         name_carA.setText(userLogged.getName());
         surnames_carA.setText(userLogged.getSurnames());
@@ -327,7 +322,6 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
     }
 
     private void loadAccidentReportData() {
-
         id.setText(accidentReportDB.getId());
         reason.setText(accidentReportDB.getReasonAccident());
         txtlocation.setText(accidentReportDB.getLocation());
@@ -346,7 +340,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
         registration_carB.setText(accidentReportDB.getRegistrationB());
     }
 
-    public AccidentReport myReports(String username) {
+    public AccidentReport myLastReport(String username) {
         DbHelper dbHelper = new DbHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -383,7 +377,7 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                 sortOrder
         );
 
-        while (cursor.moveToNext()) {
+        if (cursor.moveToFirst()) {
             accidentReport = new AccidentReport();
             accidentReport.setId(cursor.getString(
                     cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.ID)));
@@ -418,14 +412,13 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
                     cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.DNI_B)));
             accidentReport.setRegistrationB(cursor.getString(
                     cursor.getColumnIndexOrThrow(AccidentReportContract.TableAccidentReportColumns.REGISTRATION_B)));
-
-
         }
         cursor.close();
+
         if (accidentReport != null) {
             return accidentReport;
         } else {
-            Toast.makeText(this, "Actualmente no tiene partes", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.not_reports), Toast.LENGTH_LONG).show();
             return null;
         }
 
@@ -446,6 +439,8 @@ public class AccidentReportActivity extends AppCompatActivity implements View.On
         phone_carB.setEnabled(Boolean.FALSE);
         dni_carB.setEnabled(Boolean.FALSE);
         registration_carB.setEnabled(Boolean.FALSE);
+        imageView.setVisibility(View.VISIBLE);
+        txtlocation.setVisibility(View.VISIBLE);
     }
 
 
