@@ -1,4 +1,7 @@
-package com.example.accidentreport.start;
+package com.example.accidentreport.report;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -6,47 +9,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.accidentreport.R;
 import com.example.accidentreport.domain.User;
 import com.example.accidentreport.login.LoginActivity;
 import com.example.accidentreport.login.RegisterActivity;
-import com.example.accidentreport.report.AccidentReportActivity;
-import com.example.accidentreport.report.MyReportsActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-
-    Button buttonNewReport;
-    Button buttonMyReports;
-    Button buttonMyLastReport;
-    MenuItem userId;
+public class MyReportsActivity extends AppCompatActivity {
 
     private User userLogged;
+    MenuItem userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_my_reports);
 
-        //RECUPERAR USUARIO LOGGEADO
         userLogged = (User) getIntent().getSerializableExtra("userLogged");
-
-
-        buttonNewReport = findViewById(R.id.newReportButton);
-        buttonNewReport.setOnClickListener(this);
-
-        buttonMyReports = findViewById(R.id.myReportsButton);
-        buttonMyReports.setOnClickListener(this);
-
-        buttonMyLastReport = findViewById(R.id.myLastReportButton);
-        buttonMyLastReport.setOnClickListener(this);
-
     }
 
     @Override
@@ -69,29 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             default:
                 return false;
-        }
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.newReportButton:
-                Intent intent = new Intent(this, AccidentReportActivity.class);
-                intent.putExtra("userLogged", userLogged);
-                intent.putExtra("newPart", "true");
-                startActivity(intent);
-                break;
-            case R.id.myLastReportButton:
-                Intent intentMyLastReport = new Intent(this, AccidentReportActivity.class);
-                intentMyLastReport.putExtra("userLogged", userLogged);
-                intentMyLastReport.putExtra("newPart", "false");
-                startActivity(intentMyLastReport);
-                break;
-            case R.id.myReportsButton:
-                Intent intentMyReports = new Intent(this, MyReportsActivity.class);
-                intentMyReports.putExtra("userLogged", userLogged);
-                startActivity(intentMyReports);
         }
     }
 
@@ -125,6 +81,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public User getUserLogged() {
         return userLogged;
     }
-
-
 }

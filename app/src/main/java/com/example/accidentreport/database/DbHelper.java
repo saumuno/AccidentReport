@@ -58,7 +58,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + AccidentReportContract.TABLE_USER);
         db.execSQL("drop table if exists " + AccidentReportContract.TABLE_ACCIDENT_REPORT);
 
-        onCreate(db);
         Log.d(TAG,"onUpgrade");
+        onCreate(db);
     }
 }

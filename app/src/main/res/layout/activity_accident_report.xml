@@ -71,7 +71,8 @@
                 android:layout_marginEnd="10dp"
                 android:text=""
                 android:textColor="@android:color/black"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/locationButton"
@@ -95,10 +96,10 @@
 
             <ImageView
                 android:id="@+id/imageview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/button_image"

@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         if (userLogged != null) {
             register_username.setText(userLogged.getUsername());
+            register_username.setEnabled(false);
             register_password.setText(userLogged.getPassword());
             register_name.setText(userLogged.getName());
             register_surnames.setText(userLogged.getSurnames());
@@ -95,10 +96,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     long insertRows = db.insert(AccidentReportContract.TABLE_USER, null, values);
 
                     if (insertRows == -1) {
-                        Toast.makeText(this, "Error al registrar el usuario: Username existente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.user_register_error), Toast.LENGTH_LONG).show();
                     } else {
                         startActivity(new Intent(this, LoginActivity.class));
-                        Toast.makeText(this, "Usuario registrado correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, getString(R.string.user_register_correct), Toast.LENGTH_LONG).show();
 
                     }
                     break;
@@ -106,14 +107,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     long updateRow = db.update(AccidentReportContract.TABLE_USER, values, "username= ?", new String[]{username});
 
                     if (updateRow == -1) {
-                        Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this,  getString(R.string.user_update_error), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this,  getString(R.string.user_update_correct), Toast.LENGTH_LONG).show();
                     }
                     break;
             }
         } else {
-            Toast.makeText(this, "Por favor, rellene todos los campos", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.fill_in_all_fields), Toast.LENGTH_LONG).show();
         }
 
     }

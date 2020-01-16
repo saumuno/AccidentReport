@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Parte de accidentes</string>
+    <string name="username">Nombre usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Entrar</string>
+    <string name="register">Registrar</string>
+    <string name="save">Guardar</string>
+    <string name="update">Actualizar</string>
+    <string name="name">Nombre</string>
+    <string name="surnames">Apellidos</string>
+    <string name="dni">DNI</string>
+    <string name="phone">Teléfono</string>
+    <string name="myProfile">Mi perfil</string>
+    <string name="shutdown">Cerrar sesion</string>
+    <string name="newReport">Nuevo parte</string>
+    <string name="myReports">Mis partes</string>
+    <string name="myLastReport">Mi último parte</string>
+    <string name="location">Localización</string>
+    <string name="locationButton">Obtener mi localización</string>
+    <string name="carA">Coche A</string>
+    <string name="carB">Coche B</string>
+    <string name="owner_car_name">Propiertario</string>
+    <string name="owner_car_surnanames">Apellidos</string>
+    <string name="owner_car_phone">Teléfono</string>
+    <string name="owner_car_dni">DNI</string>
+    <string name="car_registration">Matrícula</string>
+    <string name="accident_reason">Razón del accidente</string>
+    <string name="accident_location">Localización del accidente</string>
+    <string name="accident_photo">Foto del accidente</string>
+    <string name="accident_report_id">Parte ID</string>
+    <string name="take_photo">Tomar foto</string>
+
+    /*---------------MESSAGES-------------*/
+    <string name="insert_user_and_pass">Introduzca usuario y password</string>
+    <string name="incorrect_user_or_pass">Usuario o contraseña incorrectos</string>
+    <string name="user_register_error">Error al registrar el usuario: Username existente</string>
+    <string name="user_register_correct">Usuario registrado correctamente</string>
+    <string name="user_update_error">Error al actualizar el usuario</string>
+    <string name="user_update_correct">Usuario actualizado correctamente</string>
+    <string name="fill_in_all_fields">Por favor, rellene todos los campos</string>
+    <string name="report_save_error">Error al registrar el usuario: Username existente</string>
+    <string name="report_save_correct">Usuario registrado correctamente</string>
+    <string name="not_reports">Actualmente no tiene partes</string>
+    <string name="closed_sesion_answer">¿Está seguro de que desea cerrar sesión?</string>
+    <string name="yes">Sí</string>
+    <string name="not">No</string>
+</resources>
