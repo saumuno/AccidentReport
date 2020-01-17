@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.accidentreport.R;
 import com.example.accidentreport.database.DbHelper;
 import com.example.accidentreport.domain.User;
+import com.example.accidentreport.start.MainActivity;
 import com.example.accidentreport.utils.AccidentReportContract;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -109,6 +110,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (updateRow == -1) {
                         Toast.makeText(this,  getString(R.string.user_update_error), Toast.LENGTH_LONG).show();
                     } else {
+                        userLogged = newUser;
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.putExtra("userLogged", userLogged);
+                        startActivity(intent);
                         Toast.makeText(this,  getString(R.string.user_update_correct), Toast.LENGTH_LONG).show();
                     }
                     break;
